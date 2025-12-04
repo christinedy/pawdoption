@@ -1,0 +1,101 @@
+:root {
+  --bg-dark: #1e1e1e; 
+  --primary-color: #527a91;
+  --primary-hover: #406073;
+  --heading-color: #1a423e;
+  --link-color: #3b9df8;
+  --input-bg: #ffffff;
+  --input-border: #ced4da;
+}
+
+body {
+  background-color: var(--bg-dark);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.auth-card {
+  border-radius: 20px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  min-height: 550px; 
+}
+
+.auth-form-container {
+  padding: 3rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-title {
+  color: var(--heading-color);
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.form-control {
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--input-border);
+  margin-bottom: 1rem;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: var(--primary-color);
+}
+
+.btn-custom {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-weight: 600;
+  border: none;
+  transition: background 0.3s;
+}
+
+.btn-custom:hover {
+  background-color: var(--primary-hover);
+  color: white;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 12px;
+  cursor: pointer;
+  color: #6c757d;
+  background: none;
+  border: none;
+}
+
+.illustration-side {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.illustration-img {
+  max-width: 80%;
+  height: auto;
+}
+
+.auth-link {
+  color: var(--link-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}

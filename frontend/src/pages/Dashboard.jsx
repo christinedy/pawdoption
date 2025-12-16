@@ -9,8 +9,10 @@ const Dashboard = () => {
   const { user, logoutUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('applications');
   const [adopter, setAdopter] = useState(null);
   const [applications, setApplications] = useState([]);
+  const [adoptionHistory, setAdoptionHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -34,6 +36,7 @@ const Dashboard = () => {
       
       setAdopter(data.adopter);
       setApplications(data.applications);
+      setAdoptionHistory(data.adoptionHistory);
     } catch (err) {
       setError(err.response?.data?.message || err.message);
       if (err.response?.status === 401) {
@@ -108,28 +111,63 @@ const Dashboard = () => {
             <p>Approved</p>
             <h3>{applications.filter(a => a.status === 'approved').length}</h3>
           </div>
+          <div className="stat-card">
+            <p>Adopted</p>
+            <h3>{adoptionHistory.length}</h3>
+          </div>
+        </div>
+
+        <div className="tabs">
+          <div className={`tab ${activeTab === 'applications' ? 'active' : ''}`} onClick={() => setActiveTab('applications')}>
+            My Applications
+          </div>
+          <div className={`tab ${activeTab === 'history' ? 'active' : ''}`} onClick={() => setActiveTab('history')}>
+            Adoption History
+          </div>
         </div>
 
         <div className="tab-content">
-          <h2>My Applications</h2>
-          {applications.length === 0 ? (
-            <p className="empty-message">No applications yet.</p>
-          ) : (
-            applications.map(app => (
-              <div key={app.id} className="application-card">
-                <div>
-                  <h3>{app.petName}</h3>
-                  <p>{app.breed}</p>
-                  <div className={getStatusClass(app.status)}>{app.status}</div>
-                  <small>Applied: {new Date(app.appliedDate).toLocaleDateString()}</small>
-                </div>
-                {app.status === 'pending' && (
-                  <button className="btn-delete" onClick={() => handleDeleteApplication(app.id)}>
-                    <Trash2 size={16} /> Delete
-                  </button>
-                )}
-              </div>
-            ))
+          {activeTab === 'applications' && (
+            <div>
+              {applications.length === 0 ? (
+                <p className="empty-message">No applications yet.</p>
+              ) : (
+                applications.map(app => (
+                  <div key={app.id} className="application-card">
+                    <div>
+                      <h3>{app.petName}</h3>
+                      <p>{app.breed}</p>
+                      <div className={getStatusClass(app.status)}>{app.status}</div>
+                      <small>Applied: {new Date(app.appliedDate).toLocaleDateString()}</small>
+                    </div>
+                    {app.status === 'pending' && (
+                      <button className="btn-delete" onClick={() => handleDeleteApplication(app.id)}>
+                        <Trash2 size={16} /> Delete
+                      </button>
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+
+          {activeTab === 'history' && (
+            <div>
+              {adoptionHistory.length === 0 ? (
+                <p className="empty-message">No adoption history yet</p>
+              ) : (
+                adoptionHistory.map(hist => (
+                  <div key={hist.id} className="application-card">
+                    <div>
+                      <h3>{hist.petName}</h3>
+                      <p>{hist.breed}</p>
+                      <div className="status approved">{hist.status}</div>
+                      <small>Adopted: {new Date(hist.adoptedDate).toLocaleDateString()}</small>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           )}
         </div>
       </div>
